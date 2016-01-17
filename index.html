@@ -23,7 +23,7 @@
             data: []
         }
 
-        var input = Line('tr0', table.th);
+        var input = Line('tr0');
         input.set('year', 2016);
         input.set('month', 1);
         input.set('day', 17);
@@ -47,7 +47,7 @@
 
             $('.table').append(tr);
 
-            var input = Line('tr' + (table.data.length + 1), table.th);
+            var input = Line('tr' + (table.data.length + 1));
             table.data.push(input);
         });
     </script>

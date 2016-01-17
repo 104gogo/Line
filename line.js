@@ -26,7 +26,7 @@ function DataBinder(scope, object_id) {
     return pubSub;
 }
 
-function Line(scope, props) {
+function Line(scope) {
     var uid = 'model';
     var pubSub = new DataBinder(scope, uid);
     var message = scope + uid + ':change';
