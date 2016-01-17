@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>104gogo</title>
+    <meta charset="UTF-8">
+    <title>104gogo</title>
+    <style rel="stylesheet" type="text/css">
+        .fl {
+            float: left;
+        }
+        .left {
+            margin-right: 20px
+        }
+    </style>
 </head>
 <body>
-    <div class="table">
-        <div class="tr0">
-            <input data-bind-model="year" value="" /> 
-            <input data-bind-model="month" value="" />
-            <input data-bind-model="day" value="" />
+    <div class="fl left">
+       <div class="table1">
+            <div class="table1Tr0">
+                <input data-bind-model="year" value="" /><input data-bind-model="month" value="" /><input data-bind-model="day" value="" />
+            </div>
         </div>
+        <button class="js_add1">add</button>
+        <button class="js_button1">console</button>
     </div>
-    
-    <button class="js_add">add</button>
-    <button class="js_button">console</button>
+    <div class="fl right">
+        <div class="table2">
+            <div class="table2Tr0">
+                <input data-bind-model="a" value="" /><input data-bind-model="b" value="" />
+            </div>
+        </div>
+        <button class="js_add2">add</button>
+        <button class="js_button2">console</button>
+    </div>
     <script type="text/javascript" src="http://s.56qq.cn/staticBase/dist/20151012/js/lib/lib.js"></script>
     <script type="text/javascript" src="./line.js"></script>
     <script>
@@ -23,30 +39,58 @@
             data: []
         }
 
-        var input = Line('tr0', table.th);
+        var input = Line('table1Tr0', table.th);
         $.extend(input, {year: 2016, month: 1, day: 17});
         
         table.data.push(input);
 
+        var table2 = {
+            th: ['a', 'b'],
+            data: []
+        }
+
+        var input2 = Line('table2Tr0', table2.th);
+        $.extend(input2, {a: 1, b: 2});
+        
+        table2.data.push(input2);
+
         /****************************************************/
 
-        $('.js_button').click(function() {
+        $('.js_button1').click(function() {
             for (var i = 0, ii = table.data.length; i < ii; ++i) {
                 console.log(table.data[i].year, table.data[i].month, table.data[i].day)
             }
         });
 
-        $('.js_add').click(function() {
-            var tr = '<div class="tr' + (table.data.length + 1) + '">' +
+        $('.js_add1').click(function() {
+            var tr = '<div class="table1Tr' + (table.data.length + 1) + '">' +
                         '<input data-bind-model="year" value="" />' + 
                         '<input data-bind-model="month" value="" />' + 
                         '<input data-bind-model="day" value="" />' + 
                     '</div> ';
 
-            $('.table').append(tr);
+            $('.table1').append(tr);
 
-            var input = Line('tr' + (table.data.length + 1), table.th);
+            var input = Line('table1Tr' + (table.data.length + 1), table.th);
             table.data.push(input);
+        });
+
+         $('.js_button2').click(function() {
+            for (var i = 0, ii = table2.data.length; i < ii; ++i) {
+                console.log(table2.data[i].a, table2.data[i].b);
+            }
+        });
+
+        $('.js_add2').click(function() {
+            var tr = '<div class="table2Tr' + (table2.data.length + 1) + '">' +
+                        '<input data-bind-model="a" value="" />' + 
+                        '<input data-bind-model="b" value="" />' +  
+                    '</div> ';
+
+            $('.table2').append(tr);
+
+            var input = Line('table2Tr' + (table2.data.length + 1), table2.th);
+            table2.data.push(input);
         });
     </script>
 </body>
