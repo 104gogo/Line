@@ -10,9 +10,9 @@ function DataBinder(scope, object_id) {
         pubSub.trigger(message, [$input.data(data_attr), $input.val()]);
     });
 
-    pubSub.on(message, function(evt, prop_name, new_val) {
+    pubSub.on(message, function(evt, model_name, new_val) {
  
-        $('.' + scope + ' [data-' + data_attr + '=' + prop_name + ']').each(function() {
+        $('.' + scope + ' [data-' + data_attr + '=' + model_name + ']').each(function() {
             var $bound = $(this);
 
             if($bound.is('input')) {
@@ -27,27 +27,27 @@ function DataBinder(scope, object_id) {
 }
 
 function Line(scope, props) {
-    var uid = 'modle';
+    var uid = 'model';
     var pubSub = new DataBinder(scope, uid);
     var message = scope + uid + ':change';
 
     var line = {
         attributes: {},
 
-        set: function(modleName, val) {
-            this.attributes[modleName] = val;
-            pubSub.trigger(message, [modleName, val]);
+        set: function(model_name, val) {
+            this.attributes[model_name] = val;
+            pubSub.trigger(message, [model_name, val]);
         },
 
-        get: function(modleName) {
-            return this.attributes[modleName] || '';
+        get: function(model_name) {
+            return this.attributes[model_name] || '';
         },
 
         _binder: pubSub
     };
 
-    pubSub.on(message, function(vet, attr_name, new_val) {
-        line.attributes[attr_name] = new_val;
+    pubSub.on(message, function(vet, model_name, new_val) {
+        line.attributes[model_name] = new_val;
     });
 
     return line;
