@@ -24,11 +24,17 @@
         }
 
         var input = Line('tr0', table.th);
+        input.set('year', 2016);
+        input.set('month', 1);
+        input.set('day', 17);
+
         table.data.push(input);
 
+        /****************************************************/
+        
         $('.js_button').click(function() {
             for (var i = 0, ii = table.data.length; i < ii; ++i) {
-                console.log(table.data[i].year, table.data[i].month, table.data[i].day)
+                console.log(table.data[i].get('year'), table.data[i].get('month'), table.data[i].get('day'))
             }
         });
 

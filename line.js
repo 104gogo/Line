@@ -29,30 +29,22 @@ function DataBinder(scope, object_id) {
 function Line(scope, props) {
     var uid = 'modle';
     var pubSub = new DataBinder(scope, uid);
+    var message = scope + uid + ':change';
 
     var line = {
         attributes: {},
+
+        set: function(modleName, val) {
+            this.attributes[modleName] = val;
+            pubSub.trigger(message, [modleName, val]);
+        },
+
+        get: function(modleName) {
+            return this.attributes[modleName] || '';
+        },
+
         _binder: pubSub
     };
-        
-    var message = scope + uid + ':change';
-
-    function defineProperty(obj, modleName) {
-        Object.defineProperty(obj, modleName, {
-            set: function(val) {
-                this.attributes[modleName] = val;
-                pubSub.trigger(message, [modleName, val]);
-            },
-
-            get: function() {
-                return this.attributes[modleName] || '';
-            }
-        });
-    }
-
-    for (var i = 0, ii = props.length; i < ii; ++i) {
-        defineProperty(line, props[i]);
-    }
 
     pubSub.on(message, function(vet, attr_name, new_val) {
         line.attributes[attr_name] = new_val;
