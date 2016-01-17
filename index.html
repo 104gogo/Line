@@ -8,11 +8,15 @@
             float: left;
         }
         .left {
-            margin-right: 20px
+            margin-right: 20px;
+        }
+        .head {
+            margin-bottom: 30px;
         }
     </style>
 </head>
 <body>
+    <div class="head example1">name:<input data-bind-model="name"> <span data-bind-model="name"></span></div>
     <div class="fl left">
        <div class="table1">
             <div class="table1Tr0">
@@ -34,6 +38,8 @@
     <script type="text/javascript" src="http://s.56qq.cn/staticBase/dist/20151012/js/lib/lib.js"></script>
     <script type="text/javascript" src="./line.js"></script>
     <script>
+        Line('example1', ['name']);
+
         var table = {
             th: ['year', 'month', 'day'],
             data: []

@@ -4,6 +4,7 @@ function PubSub(scope, message) {
     pubSub.on(message, function(evt, o) {
         switch(o.type) {
             case 'keyupChange':
+                pubSub.trigger('keyupChange', o);
                 pubSub.trigger('objChange', o);
                 return;
             case 'objChange':
