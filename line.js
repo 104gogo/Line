@@ -1,25 +1,41 @@
-function DataBinder(scope, object_id) {
+function PubSub(scope, message) {
     var pubSub = $({scope: scope});
 
+    pubSub.on(message, function(evt, o) {
+        switch(o.type) {
+            case 'keyupChange':
+                pubSub.trigger('objChange', o);
+                return;
+            case 'objChange':
+                pubSub.trigger('keyupChange', o);
+                pubSub.trigger('objChange', o);
+                return;
+        }    
+    });
+
+    return pubSub;
+}
+
+function DataBinder(scope, object_id) {
     var data_attr = 'bind-' + object_id,
         message = scope + object_id + ':change';
+
+    var pubSub = new PubSub(scope, message);
 
     $('.' + scope).on('change keyup', '[data-' + data_attr + ']', function(evt) {
         var $input = $(this);
 
-        pubSub.trigger(message, [$input.data(data_attr), $input.val(), 'html']);
+        pubSub.trigger(message, {type: 'keyupChange', model_name: $input.data(data_attr), new_val: $input.val()});
     });
 
-    pubSub.on(message, function(evt, model_name, new_val, isFrom) {
-        if(isFrom == 'html') return;
- 
-        $('.' + scope + ' [data-' + data_attr + '=' + model_name + ']').each(function() {
+    pubSub.on('keyupChange', function(evt, o) {
+        $('.' + scope + ' [data-' + data_attr + '=' + o.model_name + ']').each(function() {
             var $bound = $(this);
 
-            if($bound.is('input')) {
-                $bound.val(new_val);
+            if($bound.is('input,textarea')) {
+                $bound.val(o.new_val);
             } else {
-                $bound.html(new_val);
+                $bound.html(o.new_val);
             }
         });
     });
@@ -29,6 +45,7 @@ function DataBinder(scope, object_id) {
 
 function Line(scope, props) {
     var uid = 'model';
+
     var pubSub = new DataBinder(scope, uid);
 
     var line = {
@@ -42,7 +59,7 @@ function Line(scope, props) {
         Object.defineProperty(obj, model_name, {
             set: function(val) {
                 this.attributes[model_name] = val;
-                pubSub.trigger(message, [model_name, val]);
+                pubSub.trigger(message, {type: 'objChange', model_name: model_name, new_val: val});
             },
 
             get: function() {
@@ -55,8 +72,8 @@ function Line(scope, props) {
         defineProperty(line, props[i]);
     }
 
-    pubSub.on(message, function(vet, model_name, new_val) {
-        line.attributes[model_name] = new_val;
+    pubSub.on('objChange', function(vet, o) {
+        line.attributes[o.model_name] = o.new_val;
     });
 
     return line;
