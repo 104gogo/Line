@@ -10,9 +10,9 @@ function DataBinder(scope, object_id) {
         pubSub.trigger(message, [$input.data(data_attr), $input.val()]);
     });
 
-    pubSub.on(message, function(evt, prop_name, new_val) {
+    pubSub.on(message, function(evt, model_name, new_val) {
  
-        $('.' + scope + ' [data-' + data_attr + '=' + prop_name + ']').each(function() {
+        $('.' + scope + ' [data-' + data_attr + '=' + model_name + ']').each(function() {
             var $bound = $(this);
 
             if($bound.is('input')) {
@@ -27,7 +27,7 @@ function DataBinder(scope, object_id) {
 }
 
 function Line(scope, props) {
-    var uid = 'modle';
+    var uid = 'model';
     var pubSub = new DataBinder(scope, uid);
 
     var line = {
@@ -37,15 +37,15 @@ function Line(scope, props) {
         
     var message = scope + uid + ':change';
 
-    function defineProperty(obj, modleName) {
-        Object.defineProperty(obj, modleName, {
+    function defineProperty(obj, model_name) {
+        Object.defineProperty(obj, model_name, {
             set: function(val) {
-                this.attributes[modleName] = val;
-                pubSub.trigger(message, [modleName, val]);
+                this.attributes[model_name] = val;
+                pubSub.trigger(message, [model_name, val]);
             },
 
             get: function() {
-                return this.attributes[modleName] || '';
+                return this.attributes[model_name] || '';
             }
         });
     }
@@ -54,8 +54,8 @@ function Line(scope, props) {
         defineProperty(line, props[i]);
     }
 
-    pubSub.on(message, function(vet, attr_name, new_val) {
-        line.attributes[attr_name] = new_val;
+    pubSub.on(message, function(vet, model_name, new_val) {
+        line.attributes[model_name] = new_val;
     });
 
     return line;

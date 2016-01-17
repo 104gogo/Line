@@ -7,9 +7,9 @@
 <body>
     <div class="table">
         <div class="tr0">
-            <input data-bind-modle="year" value="" /> 
-            <input data-bind-modle="month" value="" />
-            <input data-bind-modle="day" value="" />
+            <input data-bind-model="year" value="" /> 
+            <input data-bind-model="month" value="" />
+            <input data-bind-model="day" value="" />
         </div>
     </div>
     
@@ -38,9 +38,9 @@
 
         $('.js_add').click(function() {
             var tr = '<div class="tr' + (table.data.length + 1) + '">' +
-                        '<input data-bind-modle="year" value="" />' + 
-                        '<input data-bind-modle="month" value="" />' + 
-                        '<input data-bind-modle="day" value="" />' + 
+                        '<input data-bind-model="year" value="" />' + 
+                        '<input data-bind-model="month" value="" />' + 
+                        '<input data-bind-model="day" value="" />' + 
                     '</div> ';
 
             $('.table').append(tr);
