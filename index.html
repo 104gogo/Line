@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>104gogo</title>
+</head>
+<body>
+    <div class="table">
+        <div class="tr0">
+            <input data-bind-modle="year" value="" /> 
+            <input data-bind-modle="month" value="" />
+            <input data-bind-modle="day" value="" />
+        </div>
+    </div>
+    
+    <button class="js_add">add</button>
+    <button class="js_button">console</button>
+    <script type="text/javascript" src="http://s.56qq.cn/staticBase/dist/20151012/js/lib/lib.js"></script>
+    <script type="text/javascript" src="./line.js"></script>
+    <script>
+        var table = {
+            th: ['year', 'month', 'day'],
+            data: []
+        }
+
+        var input = Line('tr0', table.th);
+        table.data.push(input);
+
+        $('.js_button').click(function() {
+            for (var i = 0, ii = table.data.length; i < ii; ++i) {
+                console.log(table.data[i].year, table.data[i].month, table.data[i].day)
+            }
+        });
+
+        $('.js_add').click(function() {
+            var tr = '<div class="tr' + (table.data.length + 1) + '">' +
+                        '<input data-bind-modle="year" value="" />' + 
+                        '<input data-bind-modle="month" value="" />' + 
+                        '<input data-bind-modle="day" value="" />' + 
+                    '</div> ';
+
+            $('.table').append(tr);
+
+            var input = Line('tr' + (table.data.length + 1), table.th);
+            table.data.push(input);
+        });
+    </script>
+</body>
+</html>
