@@ -24,7 +24,11 @@
         }
 
         var input = Line('tr0', table.th);
+        $.extend(input, {year: 2016, month: 1, day: 17});
+        
         table.data.push(input);
+
+        /****************************************************/
 
         $('.js_button').click(function() {
             for (var i = 0, ii = table.data.length; i < ii; ++i) {
